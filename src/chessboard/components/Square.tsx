@@ -3,6 +3,7 @@ import { useDrop } from "react-dnd";
 
 import { useChessboard } from "../context/chessboard-context";
 import { BoardOrientation, Coords, Piece, Square as Sq } from "../types";
+import { kingIsInCheck } from "../functions";
 
 type SquareProps = {
   children: ReactNode;
@@ -70,6 +71,7 @@ export function Square({
     shiftAltLeftClickArrowColor,
     shiftAltRightClickArrowColor,
     displayedMoveData,
+    fenString,
   } = useChessboard();
 
   const [{ isOver }, drop] = useDrop(
@@ -138,6 +140,8 @@ export function Square({
     ...(isOver && customDropSquareStyle),
     position: "relative",
   } as React.CSSProperties;
+
+  console.log({kingIsInCheck: kingIsInCheck(fenString ?? "", currentPosition)})
 
   return (
     <div

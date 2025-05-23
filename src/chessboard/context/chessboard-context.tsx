@@ -41,6 +41,7 @@ type RequiredChessboardProps = Required<ChessboardProps>;
 
 interface ChessboardProviderContext {
   // Props from user
+  fenString: string | undefined;
   tagToDisplay: ChessboardProps["tagToDisplay"];
   allowDragOutsideBoard: RequiredChessboardProps["allowDragOutsideBoard"];
   animationDuration: RequiredChessboardProps["animationDuration"];
@@ -141,6 +142,7 @@ export const useChessboard = () => useContext(ChessboardContext);
 export const ChessboardProvider = forwardRef(
   (
     {
+      fenString,
       tagToDisplay,
       allowDragOutsideBoard = true,
       animationDuration = 300,
@@ -598,6 +600,7 @@ export const ChessboardProvider = forwardRef(
     }
 
     const ChessboardProviderContextValue: ChessboardProviderContext = {
+      fenString,
       tagToDisplay,
       allowDragOutsideBoard,
       animationDuration,

@@ -433,6 +433,11 @@ export type ChessboardProps = {
    * @default undefined
    */
   tagToDisplay?: ReactNode;
+  /**
+   * Current FEN string.
+   * @default undefined
+   */
+  fenString?: string;
 };
 
 export type ChessboardDnDProviderProps = {

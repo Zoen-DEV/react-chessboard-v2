@@ -1,8 +1,6 @@
 import { BoardOrientation, BoardPosition, Piece, Square } from "./types";
-import {
-  COLUMNS,
-  START_POSITION_OBJECT,
-} from "./consts";
+import { Chess } from "chess.js";
+import { COLUMNS, START_POSITION_OBJECT } from "./consts";
 
 /**
  * Retrieves the coordinates at the centre of the requested square, relative to the top left of the board (0, 0).
@@ -29,6 +27,34 @@ export function getRelativeCoords(
       : rank * squareSize + squareSize / 2;
 
   return { x, y };
+}
+
+export function getPieceSquare(
+  position: BoardPosition,
+  color: "w" | "b",
+): Square | null {
+  const king = color === "w" ? "wK" : "bK";
+  for (const square in position) {
+    if (position[square as Square] === king) {
+      return square as Square;
+    }
+  }
+  return null;
+}
+
+export function kingIsInCheck(
+  fen: string,
+  currentPosition: BoardPosition,
+): Square | null {
+  const chess = new Chess(fen);
+
+  const inCheck = chess.in_check();
+  
+  if (inCheck) {
+    return getPieceSquare(currentPosition, chess.turn() === "w" ? "w" : "b")
+  }
+
+  return null;
 }
 
 /**
