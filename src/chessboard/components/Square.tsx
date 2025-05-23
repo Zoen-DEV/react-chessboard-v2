@@ -141,7 +141,9 @@ export function Square({
     position: "relative",
   } as React.CSSProperties;
 
-  const isCheckSquare = kingIsInCheck(fenString ?? "", currentPosition)
+  const isCheckSquare = kingIsInCheck(fenString ?? "", currentPosition);
+
+  console.log({isCheckSquare, targetSquare: displayedMoveData?.toSquare})
 
   return (
     <div
