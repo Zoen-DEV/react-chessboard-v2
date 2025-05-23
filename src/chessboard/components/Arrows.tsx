@@ -63,8 +63,6 @@ export const Arrows = () => {
           y: from.y + (dy * (r - ARROW_LENGTH_REDUCER)) / r,
         };
 
-        console.log({from, to})
-
         return (
           <Fragment
             key={`${arrowStartField}-${arrowEndField}${
