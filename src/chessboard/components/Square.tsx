@@ -263,7 +263,7 @@ export function Square({
           }}
         ></div>
       )}
-      {isCheckSquare && (
+      {isCheckSquare && isCheckSquare === displayedMoveData?.toSquare && (
         <div
           style={{
             position: "absolute",
@@ -271,7 +271,7 @@ export function Square({
             bottom: "0px",
             left: "0px",
             right: "0px",
-            backgroundColor: "rgba(255, 0, 0, 0.3)", // Rojo translúcido
+            backgroundColor: "rgba(255, 0, 0, 0.3)",
             zIndex: 1,
           }}
         ></div>
