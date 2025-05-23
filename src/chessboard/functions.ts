@@ -19,7 +19,10 @@ export function getRelativeCoords(
   const file = square.charCodeAt(0) - "a".charCodeAt(0);
   const rank = parseInt(square[1], 10) - 1;
 
-  const x = file * squareSize + squareSize / 2;
+  const x =
+    boardOrientation === "white"
+      ? file * squareSize + squareSize / 2
+      : (7 - file) * squareSize + squareSize / 2;
   const y =
     boardOrientation === "white"
       ? (7 - rank) * squareSize + squareSize / 2
