@@ -141,7 +141,7 @@ export function Square({
     position: "relative",
   } as React.CSSProperties;
 
-  console.log({kingIsInCheck: kingIsInCheck(fenString ?? "", currentPosition)})
+  const isCheckSquare = kingIsInCheck(fenString ?? "", currentPosition)
 
   return (
     <div
@@ -260,6 +260,19 @@ export function Square({
             left: "0px",
             right: "0px",
             backgroundColor: "rgba(155, 199, 0, .41)",
+          }}
+        ></div>
+      )}
+      {isCheckSquare && (
+        <div
+          style={{
+            position: "absolute",
+            top: "0px",
+            bottom: "0px",
+            left: "0px",
+            right: "0px",
+            backgroundColor: "rgba(255, 0, 0, 0.3)", // Rojo translúcido
+            zIndex: 1,
           }}
         ></div>
       )}
