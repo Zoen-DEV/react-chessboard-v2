@@ -143,7 +143,7 @@ export function Square({
 
   const isCheckSquare = kingIsInCheck(fenString ?? "", currentPosition);
 
-  console.log({isCheckSquare, targetSquare: displayedMoveData?.toSquare})
+  console.log({isCheckSquare, square})
 
   return (
     <div
@@ -265,7 +265,7 @@ export function Square({
           }}
         ></div>
       )}
-      {isCheckSquare && isCheckSquare === displayedMoveData?.toSquare && (
+      {isCheckSquare && isCheckSquare === square && (
         <div
           style={{
             position: "absolute",
