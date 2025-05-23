@@ -143,8 +143,6 @@ export function Square({
 
   const isCheckSquare = kingIsInCheck(fenString ?? "", currentPosition);
 
-  console.log({isCheckSquare, square})
-
   return (
     <div
       ref={drop}
