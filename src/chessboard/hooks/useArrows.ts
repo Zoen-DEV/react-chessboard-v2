@@ -57,6 +57,23 @@ export const useArrows = (
   const allBoardArrows = customArrowsSet
     ? [...new Set([...arrows, ...customArrowsSet])]
     : [...arrows];
+    
+  const removeDuplicateArrows = (data: Arrow[]) => {
+    const result: Arrow[] = [];
+    const seen: string[] = [];
+
+    for (let i = data.length - 1; i >= 0; i--) {
+      const [from, to] = data[i];
+      const key = `${from}-${to}`;
+
+      if (!seen.includes(key)) {
+        result.unshift(data[i]);
+        seen.push(key);
+      }
+    }
+
+    return result;
+  }
 
   const onArrowDrawEnd = (fromSquare: Square, toSquare: Square) => {
     if (fromSquare === toSquare || !areArrowsAllowed) return;
@@ -79,10 +96,10 @@ export const useArrows = (
       });
     }
 
-    console.log({arrowsCopy});
+    console.log({arrowsCopy2: removeDuplicateArrows(arrowsCopy)});
 
     setNewArrow(undefined);
-    setArrows(arrowsCopy);
+    setArrows(removeDuplicateArrows(arrowsCopy));
   };
 
   return {
