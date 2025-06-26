@@ -64,8 +64,8 @@ export const useArrows = (
     let arrowsCopy;
     const newArrow: Arrow = [fromSquare, toSquare, customArrowColor];
 
-    const isNewArrowUnique = allBoardArrows.every(([arrowFrom, arrowTo]) => {
-      return !(arrowFrom === fromSquare && arrowTo === toSquare);
+    const isNewArrowUnique = allBoardArrows.every(([arrowFrom, arrowTo, color]) => {
+      return !(arrowFrom === fromSquare && arrowTo === toSquare && color === customArrowColor);
     });
 
     // add the newArrow to arrows array if it is unique
@@ -78,6 +78,8 @@ export const useArrows = (
         return !(arrowFrom === fromSquare && arrowTo === toSquare);
       });
     }
+
+    console.log({arrowsCopy});
 
     setNewArrow(undefined);
     setArrows(arrowsCopy);
