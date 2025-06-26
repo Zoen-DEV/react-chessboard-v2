@@ -96,8 +96,6 @@ export const useArrows = (
       });
     }
 
-    console.log({arrowsCopy2: removeDuplicateArrows(arrowsCopy)});
-
     setNewArrow(undefined);
     setArrows(removeDuplicateArrows(arrowsCopy));
   };
