@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
-import { useChessboardContext } from './ChessboardProvider';
+import { useChessboard } from "../context/chessboard-context";
 import { getRelativeCoords } from './utils';
+import { defaultArrowOptions } from './defaults';
 
 export function Arrows() {
   const {
@@ -8,12 +9,15 @@ export function Arrows() {
     arrows,
     arrowOptions,
     boardOrientation,
-    chessboardColumns,
-    chessboardRows,
     internalArrows,
     newArrowStartSquare,
     newArrowOverSquare,
-  } = useChessboardContext();
+  } = useChessboard();
+
+  const arrowOptionsData = !arrowOptions ? defaultArrowOptions : arrowOptions;
+
+  const chessboardColumns = 8;
+  const chessboardRows = 8;
 
   const viewBoxWidth = 2048;
   const viewBoxHeight = viewBoxWidth * (chessboardRows / chessboardColumns);
@@ -47,25 +51,31 @@ export function Arrows() {
       }}
     >
       {arrowsToDraw.map((arrow, i) => {
+        const arrowData = Array.isArray(arrow) ? {
+          startSquare: arrow[0],
+          endSquare: arrow[1],
+          color: arrow[2] ?? "green",
+        } : arrow;
+
         const from = getRelativeCoords(
           boardOrientation,
           viewBoxWidth,
           chessboardColumns,
           chessboardRows,
-          arrow.startSquare,
+          arrowData.startSquare,
         );
         const to = getRelativeCoords(
           boardOrientation,
           viewBoxWidth,
           chessboardColumns,
           chessboardRows,
-          arrow.endSquare,
+          arrowData.endSquare,
         );
 
         // we want to shorten the arrow length so the tip of the arrow is more central to the target square instead of running over the center
         const squareWidth = viewBoxWidth / chessboardColumns;
         let ARROW_LENGTH_REDUCER =
-          squareWidth / arrowOptions.arrowLengthReducerDenominator;
+          squareWidth / arrowOptionsData.arrowLengthReducerDenominator;
 
         const isArrowActive =
           currentlyDrawingArrow && i === arrowsToDraw.length - 1;
@@ -73,14 +83,20 @@ export function Arrows() {
         // if there are different arrows targeting the same square make their length a bit shorter
         if (
           arrowsToDraw.some(
-            (restArrow) =>
-              restArrow.startSquare !== arrow.startSquare &&
-              restArrow.endSquare === arrow.endSquare,
+            (restArrow) => {
+              const restArrowData = Array.isArray(restArrow) ? {
+                startSquare: restArrow[0],
+                endSquare: restArrow[1],
+                color: restArrow[2] ?? "green",
+              } : restArrow;
+              return restArrowData.startSquare !== arrowData.startSquare &&
+              restArrowData.endSquare === arrowData.endSquare;
+            },
           ) &&
           !isArrowActive
         ) {
           ARROW_LENGTH_REDUCER =
-            squareWidth / arrowOptions.sameTargetArrowLengthReducerDenominator;
+            squareWidth / arrowOptionsData.sameTargetArrowLengthReducerDenominator;
         }
 
         // Calculate the difference in x and y coordinates between start and end points
@@ -149,36 +165,36 @@ export function Arrows() {
 
         return (
           <Fragment
-            key={`${id}-arrow-${arrow.startSquare}-${arrow.endSquare}${
+            key={`${id}-arrow-${arrowData.startSquare}-${arrowData.endSquare}${
               isArrowActive ? '-active' : ''
             }`}
           >
             <marker
-              id={`${id}-arrowhead-${i}-${arrow.startSquare}-${arrow.endSquare}`}
+              id={`${id}-arrowhead-${i}-${arrowData.startSquare}-${arrowData.endSquare}`}
               markerWidth="2"
               markerHeight="2.5"
               refX="1.25"
               refY="1.25"
               orient="auto"
             >
-              <polygon points="0.3 0, 2 1.25, 0.3 2.5" fill={arrow.color} />
+              <polygon points="0.3 0, 2 1.25, 0.3 2.5" fill={arrowData.color} />
             </marker>
             <path
               d={pathD}
               fill="none"
               opacity={
                 isArrowActive
-                  ? arrowOptions.activeOpacity
-                  : arrowOptions.opacity
+                  ? arrowOptionsData.activeOpacity
+                  : arrowOptionsData.opacity
               }
-              stroke={arrow.color}
+              stroke={arrowData.color}
               strokeWidth={
                 isArrowActive
-                  ? arrowOptions.activeArrowWidthMultiplier *
-                    (squareWidth / arrowOptions.arrowWidthDenominator)
-                  : squareWidth / arrowOptions.arrowWidthDenominator
+                  ? arrowOptionsData.activeArrowWidthMultiplier *
+                    (squareWidth / arrowOptionsData.arrowWidthDenominator)
+                  : squareWidth / arrowOptionsData.arrowWidthDenominator
               }
-              markerEnd={`url(#${id}-arrowhead-${i}-${arrow.startSquare}-${arrow.endSquare})`}
+              markerEnd={`url(#${id}-arrowhead-${i}-${arrowData.startSquare}-${arrowData.endSquare})`}
             />
           </Fragment>
         );
