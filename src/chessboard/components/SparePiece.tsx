@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useRef } from "react";
 import { useDrag } from "react-dnd";
 import { getEmptyImage } from "react-dnd-html5-backend";
 
@@ -18,6 +18,7 @@ export const SparePiece = ({
   customPieceJSX,
   dndId,
 }: PieceProps) => {
+  const pieceRef = useRef<HTMLDivElement>(null);
   const renderPiece = customPieceJSX ?? defaultPieces[piece];
   const [{ canDrag, isDragging }, drag, dragPreview] = useDrag(
     () => ({
@@ -39,7 +40,10 @@ export const SparePiece = ({
 
   return (
     <div
-      ref={canDrag ? drag : null}
+      ref={canDrag ? ((node) => {
+        pieceRef.current = node;
+        drag(node);
+      }) : null}
       data-piece={piece}
       style={{ cursor: "move" }}
     >

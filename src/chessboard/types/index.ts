@@ -1,4 +1,4 @@
-import type { FC, ReactElement, ReactNode, Ref, RefObject } from "react";
+import type { FC, ReactElement, ReactNode, Ref, RefObject, JSX } from "react";
 import { BackendFactory } from "dnd-core";
 
 export type Square =

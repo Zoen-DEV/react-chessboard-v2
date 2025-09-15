@@ -283,7 +283,7 @@ export const ChessboardProvider = forwardRef(
     } | null>(null);
 
     // the most recent timeout whilst waiting for animation to complete
-    const previousTimeoutRef = useRef<NodeJS.Timeout>();
+    const previousTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     // if currently waiting for an animation to finish
     const [isWaitingForAnimation, setIsWaitingForAnimation] = useState(false);
@@ -375,7 +375,7 @@ export const ChessboardProvider = forwardRef(
 
       // clear timeout on unmount
       return () => {
-        clearTimeout(previousTimeoutRef.current);
+        clearTimeout(previousTimeoutRef.current!);
       };
     }, [position]);
 

@@ -145,7 +145,10 @@ export function Square({
 
   return (
     <div
-      ref={drop}
+      ref={(node) => {
+        squareRef.current = node;
+        drop(node);
+      }}
       style={defaultSquareStyle}
       data-square-color={squareColor}
       data-square={square}

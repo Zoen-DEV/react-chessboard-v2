@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { useDrag } from "react-dnd";
 import { getEmptyImage } from "react-dnd-html5-backend";
 
@@ -18,6 +18,7 @@ export function Piece({
   square,
   squares,
 }: PieceProps) {
+  const divRef = useRef<HTMLDivElement>(null);
   const {
     animationDuration,
     arePiecesDraggable,
@@ -162,11 +163,12 @@ export function Piece({
   return (
     <div
       ref={
-        arePiecesDraggable
-          ? canDrag && !isShiftKeyDown && !isShiftAltKeyDown
-            ? drag
-            : null
-          : null
+        arePiecesDraggable && canDrag && !isShiftKeyDown && !isShiftAltKeyDown
+          ? (node => {
+            divRef.current = node;
+            drag(node);
+          })
+          : divRef
       }
       onClick={() => onPieceClick(piece, square)}
       data-piece={piece}
