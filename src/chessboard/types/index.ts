@@ -1,6 +1,5 @@
 import type { FC, ReactElement, ReactNode, Ref, RefObject, JSX } from "react";
 import { BackendFactory } from "dnd-core";
-import { defaultArrowOptions } from "../components/defaults";
 
 export type Square =
   | "a8"
@@ -439,26 +438,6 @@ export type ChessboardProps = {
    * @default undefined
    */
   fenString?: string;
-  /**
-   * Current arrow options.
-   * @default defaultArrowOptions
-   */
-  arrowOptions?: typeof defaultArrowOptions;
-  /**
-   * Internal arrows.
-   * @default []
-   */
-  internalArrows: Arrow[];
-  /**
-   * New arrow start square.
-   * @default null
-   */
-  newArrowStartSquare: string | null;
-  /**
-   * New arrow over square.
-   * @default null
-   */
-  newArrowOverSquare: { square: string; color: string } | null;
 };
 
 export type ChessboardDnDProviderProps = {

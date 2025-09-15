@@ -25,7 +25,6 @@ import {
 } from "../types";
 
 import { useArrows } from "../hooks/useArrows";
-import { defaultArrowOptions } from "../components/defaults";
 
 interface ChessboardProviderProps extends ChessboardProps {
   boardWidth: number;
@@ -134,10 +133,6 @@ interface ChessboardProviderContext {
   onLeftClickUp: (square: Square) => void;
   onLeftClickDown: (square: Square) => void;
   clearCurrentLeftClickDown: () => void;
-  arrowOptions?: typeof defaultArrowOptions;
-  internalArrows: Arrow[];
-  newArrowStartSquare: string | null;
-  newArrowOverSquare: { square: string; color: string } | null;
 }
 
 export const ChessboardContext = createContext({} as ChessboardProviderContext);
@@ -214,10 +209,6 @@ export const ChessboardProvider = forwardRef(
       showPromotionDialog = false,
       snapToCursor = true,
       displayedMoveData,
-      arrowOptions,
-      internalArrows,
-      newArrowStartSquare,
-      newArrowOverSquare,
     }: ChessboardProviderProps,
     ref,
   ) => {
@@ -687,10 +678,6 @@ export const ChessboardProvider = forwardRef(
       onLeftClickDown,
       currentLeftClickDown,
       displayedMoveData,
-      arrowOptions,
-      internalArrows,
-      newArrowStartSquare,
-      newArrowOverSquare,
     };
 
     return (
