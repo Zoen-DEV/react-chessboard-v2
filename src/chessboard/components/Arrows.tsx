@@ -15,8 +15,6 @@ export const Arrows = () => {
   } = useChessboard();
   const arrowsList = [...arrows, newArrow].filter(Boolean) as Arrow[];
 
-  console.log({arrowsList})
-
   return (
     <svg
       width={boardWidth}
